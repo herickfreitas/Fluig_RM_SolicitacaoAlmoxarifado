@@ -14,7 +14,8 @@
   <script src="/portal/resources/js/mustache/mustache-min.js"></script>
   <script src="/portal/resources/style-guide/js/fluig-style-guide.min.js"></script>
   <script type="text/javascript" src="numeral.js"></script>
-
+  <script type="text/javascript" src="custom.js"></script>
+  
 </head>
 
 <body>
@@ -79,36 +80,8 @@
             </div>
 <br><br>
 
-            <div class="row">
-              <div class="col-xs-12 col-md-12">
-                <label class="control-label" id="lblFornecedor"><strong>Selecione o Favorecido</strong></label>
-                <input  type="zoom"
-                id = "favorecido"
-                name="favorecido"
-                data-zoom="{
-                    'displayKey':'COD_NOMEFANTASIA',
-                    'datasetId':'_RM_FORNECEDOR',
-                    'maximumSelectionLength':'1',
-                    'fields':[
-                        {
-                          'field':'CODCFO',
-                          'label':'Cod. Fornecedor'
-                        },{
-                          'field':'NOMEFANTASIA',
-                          'label':'Nome Fantasia',
-                          'standard':'true'
-                        },{
-                          'field':'NOME',
-                          'label':'Nome'
-                        }
-                    ]
-                }"
-            />
-              </div>
-            </div>
-<br><br> 
-            <div class="row">
-				<div class="col-xs-8 col-md-8">
+      <div class="row">
+				<div class="col-xs-12 col-md-12">
 				<label class="control-label" id="lblCcusto"><strong>Selecione o Centro de Custo</strong></label>
 				<input  type="zoom"
                       id = "ccusto"
@@ -133,54 +106,58 @@
                       }"
                   />
 				</div>
-			  	<div class="col-xs-4 col-md-4">
-					<label class="control-label"  id="lbldataEmissao"><strong>Data da despesa</strong></label>
-					<input class="form-control" type="text" name="dataDespesa" id="dataDespesa" />
-				</div>
 			</div>
 
-<br><br>			
-			
-			<table class="table">
-					  <thead>
-						<tr>
-						  <th scope="col">#</th>
-						  <th scope="col">Item</th>
-						  <th scope="col">Valor R$</th>
-						</tr>
-					  </thead>
-					  <tbody>
-						<tr>
-						  <th scope="row">1</th>
-						  <td>09.30.0127 - REEMBOLSO DE DESPESA C/ TRANSPORTE (TAXI/ONIBUS/ETC)</td>
-						  <td><input class="form-control" type="text" name="valorTransporte" id="valorTransporte" value="0,00"/></td>
-						</tr>
-						<tr>
-						  <th scope="row">2</th>
-						  <td>09.30.0128 - REEMBOLSO DE DESPESA C/ ALIMENTAÇÃO</td>
-						  <td><input class="form-control" type="text" name="valorAlimentacao" id="valorAlimentacao" value="0,00"/></td>
-						</tr>
-					  </tbody>
-					</table>
-			
-			
-			
-<!--			
-<br><br>
+      <br><br>  
 
-			<div class="row">
 
-				<div class="col-xs-6 col-md-6">
-					<label class="control-label" id="lblCcusto"><strong>Valor despesa</strong></label>
-					<input class="form-control" type="text" name="valorDespesa" id="valorDespesa" />
-				</div>
-			</div>
--->
+	    </div>
+	
+
+      <div class="row">
+        <button type="button" class="btn btn-primary" name="btn_addProduto" id="btn_addProduto">Adicionar Itens</button>
+      </div>
+      <br><br>
+      
+      <div class="container-fluid">
+        <div>
+        <table tablename="tbProdutos" id="tbProdutos" noaddbutton=true>
+          <thead>
+              <tr>
+                  <td class="col-xs-10 col-md-10"><b>Item</b></td>
+                  <td class="col-xs-2 col-md-2"><b>Qtd.</b></td>
+              </tr>
+          </thead>
+          <tr> 
+              <td class="col-xs-10 col-md-10"><input type="zoom" id = "nomeItem" name="nomeItem"
+                                                    data-zoom="{
+                                                        'displayKey':'NOMEFANTASIA',
+                                                        'datasetId':'_RM_ITENS_ALMOX_Filtro',
+                                                        'maximumSelectionLength':'1',
+                                                        'placeholder':'Digite o item',
+                                                        'fields':[
+                                                        {
+                                                          'field':'CODFILIAL',
+                                                          'label':'Filial'
+                                                        },{
+                                                              'field':'NOMEFANTASIA',
+                                                              'label':'Nome',
+                                                              'standard':'true'
+                                                            }
+                                                        ]
+                                                    }" /></td>
+              <td class="col-xs-2 col-md-2"><input type="number"   name="quantidade"    id="quantidade"     class="form-control" ></td>
+          </tr>    
+        </table>
+        </div>
+      </div>
+      
+
 <br><br>
             
             <div class="row">
 				<div class="col-xs-12 col-md-12">
-				  <label class="control-label" id="lblObservacaoMov"><strong>Justificativa</strong></label>
+				  <label class="control-label" id="lblObservacaoMov"><strong>Observações</strong></label>
 				  <textarea class="form-control" rows="5" name="observacaoMov" id="observacaoMov" ></textarea>
 				</div>    
 			</div>    
@@ -197,11 +174,38 @@
 
 <script>
 
+
+// Clique do botão para adicionar linha na tabela de itens
+//$("#btn_addProduto").on("click", function(e){
+//  var linha = wdkAddChild('tbProdutos');
+//  recarregazoom (document.getElementById("filial").value.substring(0,1), linha);
+//});
+
+// Por padrão o campo filial fica livre para seleção da filial
+
+// Clique do botão para adicionar linha na tabela de itens
+$("#btn_addProduto").on("click", function(e){
+  // Efetuando a validação do preenchimento da Filial
+  if(document.getElementById("filial").value == ""){ 
+    alert('Por favor, selecione a filial');
+    document.getElementById("filial").focus();
+    return false
+  }
+  else {
+    // Incluindo item filtrando a filial
+    var linha = wdkAddChild('tbProdutos');
+    recarregazoom (document.getElementById("filial").value.substring(0,1), linha);
+    // Restringindo a alteração da filial após adicionar iten
+    window["filial"].disable(true);
+    
+  }
+});
+
+
+
 // Ocultando div que possui parâmetros para evolução do Workflow
 $('#dvCustomizada').hide(); 
 
-// Formatando campo data
-var mySimpleCalendar = FLUIGC.calendar('#dataDespesa'); 
 
 
 

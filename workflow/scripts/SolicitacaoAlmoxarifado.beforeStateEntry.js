@@ -26,22 +26,18 @@ function ProcessamentoWorkflow(){
 		
 		log.info("==========[ ProcessamentoWorkflow ENTROU ]==========");
 		
-		
+		/*
 		// VERIFICANDO SE TEM ANEXOS - INICIO //
-		
-        var anexos   = hAPI.listAttachments();
+		var anexos   = hAPI.listAttachments();
         var temAnexo = false;
-
-        if (anexos.size() > 0) {
+		if (anexos.size() > 0) {
             temAnexo = true;
         }
-
-        if (!temAnexo) {
+		if (!temAnexo) {
             throw "É preciso anexar o comprovante da despesa para continuar o processo!";
         }
-        
-		// VERIFICANDO SE TEM ANEXOS - FIM //		
-		
+        // VERIFICANDO SE TEM ANEXOS - FIM //		
+		*/
 		
 		//Recupera o usuário corrente associado a atividade
 		var requisitante = getValue("WKUser");		
