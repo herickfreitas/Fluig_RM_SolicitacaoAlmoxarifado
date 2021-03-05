@@ -53,9 +53,10 @@
             </div>
             <!-- Informação oculta por script FIM -->            
 
+<br><br>              
 			
 			<div class="row">
-              <div class="col-xs-12 col-md-12">
+              <div class="col-xs-2 col-md-2">
                 <label class="control-label" id="lblFilial"><strong>Selecione a Filial</strong></label>
                 <input  type="zoom"
                         id = "filial"
@@ -77,36 +78,35 @@
                         }"
                     />
               </div>
-            </div>
-<br><br>
 
-      <div class="row">
-				<div class="col-xs-12 col-md-12">
-				<label class="control-label" id="lblCcusto"><strong>Selecione o Centro de Custo</strong></label>
-				<input  type="zoom"
-                      id = "ccusto"
-                      name="ccusto"
-                      data-zoom="{
-                          'displayKey':'CUSTO_NOME',
-                          'datasetId':'_RM_GCCUSTO',
-                          'maximumSelectionLength':'1',
-                          'fields':[
-                              {
-                                'field':'CODCCUSTO',
-                                'label':'Cod. Centro de Custo'
-                              },{
-                                'field':'NOME',
-                                'label':'Nome',
-                                'standard':'true'
-                              },{
-                                'field':'CODREDUZIDO',
-                                'label':'Reduzido'
-                              }
-                          ]
-                      }"
-                  />
-				</div>
-			</div>
+
+
+            <div class="col-xs-10 col-md-10">
+            <label class="control-label" id="lblCcusto"><strong>Selecione o Centro de Custo</strong></label>
+            <input  type="zoom"
+                          id = "ccusto"
+                          name="ccusto"
+                          data-zoom="{
+                              'displayKey':'CUSTO_NOME',
+                              'datasetId':'_RM_GCCUSTO',
+                              'maximumSelectionLength':'1',
+                              'fields':[
+                                  {
+                                    'field':'CODCCUSTO',
+                                    'label':'Cod. Centro de Custo'
+                                  },{
+                                    'field':'NOME',
+                                    'label':'Nome',
+                                    'standard':'true'
+                                  },{
+                                    'field':'CODREDUZIDO',
+                                    'label':'Reduzido'
+                                  }
+                              ]
+                          }"
+                      />
+            </div>
+        </div>
 
       <br><br>  
 
@@ -121,7 +121,7 @@
       
       <div class="container-fluid">
         <div>
-        <table tablename="tbProdutos" id="tbProdutos" noaddbutton=true>
+        <table tablename="tbProdutos" id="tbProdutos" noaddbutton=true customFnDelete="fnCustomDelete(this)">
           <thead>
               <tr>
                   <td class="col-xs-10 col-md-10"><b>Item</b></td>
@@ -174,15 +174,6 @@
 
 <script>
 
-
-// Clique do botão para adicionar linha na tabela de itens
-//$("#btn_addProduto").on("click", function(e){
-//  var linha = wdkAddChild('tbProdutos');
-//  recarregazoom (document.getElementById("filial").value.substring(0,1), linha);
-//});
-
-// Por padrão o campo filial fica livre para seleção da filial
-
 // Clique do botão para adicionar linha na tabela de itens
 $("#btn_addProduto").on("click", function(e){
   // Efetuando a validação do preenchimento da Filial
@@ -197,16 +188,12 @@ $("#btn_addProduto").on("click", function(e){
     recarregazoom (document.getElementById("filial").value.substring(0,1), linha);
     // Restringindo a alteração da filial após adicionar iten
     window["filial"].disable(true);
-    
   }
 });
 
 
-
 // Ocultando div que possui parâmetros para evolução do Workflow
 $('#dvCustomizada').hide(); 
-
-
 
 
 </script>
