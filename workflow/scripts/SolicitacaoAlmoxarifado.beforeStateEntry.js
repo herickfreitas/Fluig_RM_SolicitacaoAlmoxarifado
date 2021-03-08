@@ -62,6 +62,9 @@ function IncioWorkflow(){
 		log.info("==========[ IncioWorkflow createDataset codccusto ]========== " + codccusto);
 		
 		
+		throw "Teste IncioWorkflow CODFILIAL: "+ codfilial + " e CODCCUSTO: "+ codccusto ;
+		
+		
 		// Gravando retorno		
 		//hAPI.setCardValue("chefia", chefe);
 		

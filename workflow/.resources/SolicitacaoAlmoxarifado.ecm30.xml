@@ -29,7 +29,7 @@
     <processDefinitionVersionPK>
       <companyId>1</companyId>
       <processId>Solicitação de Almoxarifado</processId>
-      <version>51</version>
+      <version>58</version>
     </processDefinitionVersionPK>
     <versionDescription></versionDescription>
     <formId>0</formId>
@@ -627,6 +627,9 @@ function IncioWorkflow(){&#xd;
 		// Retirando o campo do resultado&#xd;
 		var codccusto = datasetReturned.getValue(0, &quot;CODCCUSTO&quot;);&#xd;
 		log.info(&quot;==========[ IncioWorkflow createDataset codccusto ]========== &quot; + codccusto);&#xd;
+		&#xd;
+		&#xd;
+		throw &quot;Teste IncioWorkflow CODFILIAL: &quot;+ codfilial + &quot; e CODCCUSTO: &quot;+ codccusto ;&#xd;
 		&#xd;
 		&#xd;
 		// Gravando retorno		&#xd;
@@ -1254,7 +1257,7 @@ function ProcessamentoWorkflow(){&#xd;
         <companyId>1</companyId>
         <processId>SolicitacaoAlmoxarifado</processId>
         <propertyId>AutomaticTasks</propertyId>
-        <version>51</version>
+        <version>58</version>
       </advancedProcessPropertiesPK>
       <propertieValue></propertieValue>
     </AdvancedProcessProperties>
@@ -1332,7 +1335,7 @@ function ProcessamentoWorkflow(){&#xd;
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>SolicitacaoAlmoxarifado</processId>
-        <version>51</version>
+        <version>58</version>
         <linkSequence>192</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -1346,7 +1349,7 @@ function ProcessamentoWorkflow(){&#xd;
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>SolicitacaoAlmoxarifado</processId>
-        <version>51</version>
+        <version>58</version>
         <stateSequence>0</stateSequence>
         <propertyName>AutomaticTasks</propertyName>
       </extendedPropertyFieldPK>
@@ -1364,7 +1367,7 @@ function ProcessamentoWorkflow(){&#xd;
       <id>0</id>
       <tenantId>0</tenantId>
       <processId>SolicitacaoAlmoxarifado</processId>
-      <processVersion>51</processVersion>
+      <processVersion>58</processVersion>
       <stateSequence>145</stateSequence>
       <appKey>approval</appKey>
       <appField>title</appField>
@@ -1374,7 +1377,7 @@ function ProcessamentoWorkflow(){&#xd;
       <id>0</id>
       <tenantId>0</tenantId>
       <processId>SolicitacaoAlmoxarifado</processId>
-      <processVersion>51</processVersion>
+      <processVersion>58</processVersion>
       <stateSequence>145</stateSequence>
       <appKey>approval</appKey>
       <appField>description</appField>
@@ -1385,7 +1388,7 @@ function ProcessamentoWorkflow(){&#xd;
       <id>0</id>
       <tenantId>0</tenantId>
       <processId>SolicitacaoAlmoxarifado</processId>
-      <processVersion>51</processVersion>
+      <processVersion>58</processVersion>
       <stateSequence>145</stateSequence>
       <appKey>approval</appKey>
       <appField>highlight</appField>
@@ -1395,7 +1398,7 @@ function ProcessamentoWorkflow(){&#xd;
       <id>0</id>
       <tenantId>0</tenantId>
       <processId>SolicitacaoAlmoxarifado</processId>
-      <processVersion>51</processVersion>
+      <processVersion>58</processVersion>
       <stateSequence>145</stateSequence>
       <appKey>approval</appKey>
       <appField>approve</appField>
@@ -1405,7 +1408,7 @@ function ProcessamentoWorkflow(){&#xd;
       <id>0</id>
       <tenantId>0</tenantId>
       <processId>SolicitacaoAlmoxarifado</processId>
-      <processVersion>51</processVersion>
+      <processVersion>58</processVersion>
       <stateSequence>145</stateSequence>
       <appKey>approval</appKey>
       <appField>reject</appField>
@@ -1415,7 +1418,7 @@ function ProcessamentoWorkflow(){&#xd;
       <id>0</id>
       <tenantId>0</tenantId>
       <processId>SolicitacaoAlmoxarifado</processId>
-      <processVersion>51</processVersion>
+      <processVersion>58</processVersion>
       <stateSequence>161</stateSequence>
       <appKey>approval</appKey>
       <appField>title</appField>
@@ -1425,7 +1428,7 @@ function ProcessamentoWorkflow(){&#xd;
       <id>0</id>
       <tenantId>0</tenantId>
       <processId>SolicitacaoAlmoxarifado</processId>
-      <processVersion>51</processVersion>
+      <processVersion>58</processVersion>
       <stateSequence>161</stateSequence>
       <appKey>approval</appKey>
       <appField>description</appField>
@@ -1436,7 +1439,7 @@ function ProcessamentoWorkflow(){&#xd;
       <id>0</id>
       <tenantId>0</tenantId>
       <processId>SolicitacaoAlmoxarifado</processId>
-      <processVersion>51</processVersion>
+      <processVersion>58</processVersion>
       <stateSequence>161</stateSequence>
       <appKey>approval</appKey>
       <appField>highlight</appField>
@@ -1446,7 +1449,7 @@ function ProcessamentoWorkflow(){&#xd;
       <id>0</id>
       <tenantId>0</tenantId>
       <processId>SolicitacaoAlmoxarifado</processId>
-      <processVersion>51</processVersion>
+      <processVersion>58</processVersion>
       <stateSequence>161</stateSequence>
       <appKey>approval</appKey>
       <appField>approve</appField>
@@ -1456,7 +1459,7 @@ function ProcessamentoWorkflow(){&#xd;
       <id>0</id>
       <tenantId>0</tenantId>
       <processId>SolicitacaoAlmoxarifado</processId>
-      <processVersion>51</processVersion>
+      <processVersion>58</processVersion>
       <stateSequence>161</stateSequence>
       <appKey>approval</appKey>
       <appField>reject</appField>
@@ -1466,7 +1469,7 @@ function ProcessamentoWorkflow(){&#xd;
       <id>0</id>
       <tenantId>0</tenantId>
       <processId>SolicitacaoAlmoxarifado</processId>
-      <processVersion>51</processVersion>
+      <processVersion>58</processVersion>
       <stateSequence>180</stateSequence>
       <appKey>approval</appKey>
       <appField>title</appField>
@@ -1476,7 +1479,7 @@ function ProcessamentoWorkflow(){&#xd;
       <id>0</id>
       <tenantId>0</tenantId>
       <processId>SolicitacaoAlmoxarifado</processId>
-      <processVersion>51</processVersion>
+      <processVersion>58</processVersion>
       <stateSequence>180</stateSequence>
       <appKey>approval</appKey>
       <appField>description</appField>
@@ -1487,7 +1490,7 @@ function ProcessamentoWorkflow(){&#xd;
       <id>0</id>
       <tenantId>0</tenantId>
       <processId>SolicitacaoAlmoxarifado</processId>
-      <processVersion>51</processVersion>
+      <processVersion>58</processVersion>
       <stateSequence>180</stateSequence>
       <appKey>approval</appKey>
       <appField>highlight</appField>
@@ -1497,7 +1500,7 @@ function ProcessamentoWorkflow(){&#xd;
       <id>0</id>
       <tenantId>0</tenantId>
       <processId>SolicitacaoAlmoxarifado</processId>
-      <processVersion>51</processVersion>
+      <processVersion>58</processVersion>
       <stateSequence>180</stateSequence>
       <appKey>approval</appKey>
       <appField>approve</appField>
