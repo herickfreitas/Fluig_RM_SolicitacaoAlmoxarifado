@@ -3,7 +3,7 @@ function displayFields(form,customHTML){
 	var activity = getValue('WKNumState');
 	var inicioPadrao = 0;
 	var ajustarSolicitacao = 180;
-	//var inicioProcesso = 2;
+	var inicioProcesso = 2;
 	
 	log.info("displayFields WKNumState "+activity);
 	
@@ -20,6 +20,43 @@ function displayFields(form,customHTML){
 	    }
 		
 	}
-
 	
+	// Sugestão de filial e centro de custo para o solicitante
+    if	(activity == inicioPadrao || activity == inicioProcesso){
+    	var usuarioSolicitante = getDadosUsuario().getLogin();
+    	
+		// Formatando em minúsculo
+		var codusuario = usuarioSolicitante.toLowerCase();
+		log.info("==========[ displayFields codusuario ]=========="+codusuario);
+		
+		// Preparacao de filtro para consulta
+		var filtro = DatasetFactory.createConstraint("CODUSUARIO", codusuario, codusuario, ConstraintType.MUST);
+		var constraints = new Array(filtro);
+		log.info("==========[ displayFields createDataset constraints ]========== " + constraints);
+		
+		// coleta dados do dataset, utlizando filtro
+		var datasetReturned = DatasetFactory.getDataset("_RM_FUNC_FILIAL_CUSTO", null, constraints, null);
+		log.info("==========[ displayFields createDataset datasetReturned ] ========== " + datasetReturned);	  
+			    
+		// Gravando valores de retorno
+		var retorno = datasetReturned.values;
+		log.info("==========[ displayFields createDataset dataset ]========== " + retorno);
+			
+		// Retirando o campo do resultado
+		var filial = datasetReturned.getValue(0, "NOMEFILIAL");
+		log.info("==========[ displayFields createDataset codfilial ]========== " + filial);
+
+		// Retirando o campo do resultado
+		var custo = datasetReturned.getValue(0, "CUSTO_NOME");
+		log.info("==========[ displayFields createDataset codccusto ]========== " + custo);
+
+		//Atribuindo os valores aos formulários
+		form.setValue("filial",filial);
+		form.setValue("ccusto",custo);
+    }
 }
+
+function getDadosUsuario(){
+    return fluigAPI.getUserService().getCurrent();
+}
+

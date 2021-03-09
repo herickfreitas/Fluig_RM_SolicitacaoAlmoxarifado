@@ -1,5 +1,3 @@
-var SeqInicioPadrao = 0;
-var SeqInicio = 2;
 var SeqProcessamento = 172;
 var SeqAprovado = 8; // Inserir movimento no RM
 var Usuario = 'integracao';
@@ -12,11 +10,7 @@ function beforeStateEntry(sequenceId){
 	log.info("beforeStateEntry "+sequenceId);
 	
 	//If para sequenciar conforme etapas do processo
-    if (sequenceId == SeqInicioPadrao || sequenceId == SeqInicio){
-        IncioWorkflow();       
-    }
-	
-	else if (sequenceId == SeqProcessamento) {
+    if (sequenceId == SeqProcessamento) {
     	ProcessamentoWorkflow();
     }
     
@@ -25,58 +19,6 @@ function beforeStateEntry(sequenceId){
     }
 	
 }
-
-
-
-function IncioWorkflow(){
-	try {
-		log.info("==========[ IncioWorkflow ENTROU ]==========");
-
-		//Recupera o usuário corrente associado a atividade
-		var requisitante = getValue("WKUser");		
-		log.info("==========[ IncioWorkflow requisitante ]=========="+requisitante);
-
-		// Formatando em minúsculo
-		var codusuario = requisitante.toLowerCase();
-		log.info("==========[ IncioWorkflow codusuario ]=========="+codusuario);
-		
-		// Preparacao de filtro para consulta
-		var filtro = DatasetFactory.createConstraint("CODUSUARIO", codusuario, codusuario, ConstraintType.MUST);
-		var constraints = new Array(filtro);
-		log.info("==========[ IncioWorkflow createDataset constraints ]========== " + constraints);
-			    
-		// coleta dados do dataset, utlizando filtro
-		var datasetReturned = DatasetFactory.getDataset("_RM_FUNC_FILIAL_CUSTO", null, constraints, null);
-		log.info("==========[ IncioWorkflow createDataset datasetReturned ] ========== " + datasetReturned);	  
-			    
-		// Gravando valores de retorno
-		var retorno = datasetReturned.values;
-		log.info("==========[ IncioWorkflow createDataset dataset ]========== " + retorno);
-			
-		// Retirando o campo do resultado
-		var codfilial = datasetReturned.getValue(0, "CODFILIAL");
-		log.info("==========[ IncioWorkflow createDataset codfilial ]========== " + codfilial);
-
-		// Retirando o campo do resultado
-		var codccusto = datasetReturned.getValue(0, "CODCCUSTO");
-		log.info("==========[ IncioWorkflow createDataset codccusto ]========== " + codccusto);
-		
-		
-		throw "Teste IncioWorkflow CODFILIAL: "+ codfilial + " e CODCCUSTO: "+ codccusto ;
-		
-		
-		// Gravando retorno		
-		//hAPI.setCardValue("chefia", chefe);
-		
-		
-	}
-	catch (e)
-	{
-		log.error(e);
-		throw e;
-	}
-}
-
 
 
 function ProcessamentoWorkflow(){
