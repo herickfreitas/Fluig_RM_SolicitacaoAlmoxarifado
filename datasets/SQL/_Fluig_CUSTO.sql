@@ -10,8 +10,6 @@ GO
 
 
 
-
-
 CREATE VIEW [dbo].[_Fluig_CUSTO] AS
 
 SELECT 

@@ -1,11 +1,21 @@
 function createDataset(fields, constraints, sortFields) {
     var newDataset = DatasetBuilder.newDataset();
-    log.info("QUERY: " + myQuery);
-    var dataSource = "/jdbc/FluigRM";
+    var dataSource = "/jdbc/FluigRM"; 
     var ic = new javax.naming.InitialContext();
     var ds = ic.lookup(dataSource);
     var created = false;
-    var myQuery = "SELECT * FROM _Fluig_ITENS_ALMOX";
+    
+    log.info("QUERY constraints: " + constraints);
+    
+    var processo = "";
+    for (var i = 0; i < constraints.length; i++) {
+        if (constraints[i].fieldName == 'CODFILIAL') {
+            processo = constraints[i].initialValue;    
+        }
+    }
+ 
+    var myQuery = "SELECT * FROM _Fluig_ITENS_ALMOX WHERE CODFILIAL = "+"'"+processo+"'" ;
+    log.info("QUERY: " + myQuery);
     try {
         var conn = ds.getConnection();
         var stmt = conn.createStatement();

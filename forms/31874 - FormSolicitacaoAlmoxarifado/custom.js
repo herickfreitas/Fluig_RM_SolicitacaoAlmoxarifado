@@ -11,6 +11,8 @@ function fnCustomDelete(oElement){
     fnWdkRemoveChild(oElement);
     if ($('#tbProdutos')[0].rows.length-2==0){
     	window["filial"].disable(false);
+    	window["ccusto"].disable(false);
+    	
     }
  }
 

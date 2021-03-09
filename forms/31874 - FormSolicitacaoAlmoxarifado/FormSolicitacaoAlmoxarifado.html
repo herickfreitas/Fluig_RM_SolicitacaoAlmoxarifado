@@ -132,14 +132,11 @@
               <td class="col-xs-10 col-md-10"><input type="zoom" id = "nomeItem" name="nomeItem"
                                                     data-zoom="{
                                                         'displayKey':'NOMEFANTASIA',
-                                                        'datasetId':'_RM_ITENS_ALMOX_Filtro',
+                                                        'datasetId':'_RM_ITENS_ALMOX',
                                                         'maximumSelectionLength':'1',
                                                         'placeholder':'Digite o item',
                                                         'fields':[
                                                         {
-                                                          'field':'CODFILIAL',
-                                                          'label':'Filial'
-                                                        },{
                                                               'field':'NOMEFANTASIA',
                                                               'label':'Nome',
                                                               'standard':'true'
@@ -178,16 +175,23 @@
 $("#btn_addProduto").on("click", function(e){
   // Efetuando a validação do preenchimento da Filial
   if(document.getElementById("filial").value == ""){ 
-    alert('Por favor, selecione a filial');
+    alert('Por favor, selecione a Filial');
     document.getElementById("filial").focus();
+    return false
+  }
+  // Efetuando a validação do preenchimento do centro de custo
+  else if(document.getElementById("ccusto").value == ""){ 
+    alert('Por favor, selecione o Centro de custo');
+    document.getElementById("ccusto").focus();
     return false
   }
   else {
     // Incluindo item filtrando a filial
     var linha = wdkAddChild('tbProdutos');
     recarregazoom (document.getElementById("filial").value.substring(0,1), linha);
-    // Restringindo a alteração da filial após adicionar iten
+    // Restringindo a alteração após adicionar iten
     window["filial"].disable(true);
+    window["ccusto"].disable(true);
   }
 });
 
