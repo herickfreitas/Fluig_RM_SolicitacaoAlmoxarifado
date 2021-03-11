@@ -14,7 +14,9 @@ function displayFields(form,customHTML){
 	    mapaForm = form.getCardData();
 	    var it = mapaForm.keySet().iterator();
 
-	    // Desabilitando o botão
+	    // Desabilitando o botão delete ou excluir e também o botao de inserir itens
+	    form.setHideDeleteButton(true);
+	    form.setVisibleById("btn_addProduto",false);
 	    
 	    
 	    // Laço de repetição para habilitar/desabilitar os campos
