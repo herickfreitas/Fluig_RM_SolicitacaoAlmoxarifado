@@ -33,29 +33,9 @@ function ProcessamentoWorkflow(){
 		// Gravando valores no formulário
 		hAPI.setCardValue("solicitante", requisitante);
 		
-		// Preparacao de filtro para consulta
-		var c1 = DatasetFactory.createConstraint("SOLICITANTE", requisitante, requisitante, ConstraintType.MUST);
-		var constraints = new Array(c1);
-		log.info("==========[ ProcessamentoWorkflow createDataset constraints ]========== " + constraints);
-			    
-		// coleta dados do dataset, utlizando filtro
-		var datasetReturned = DatasetFactory.getDataset("_RM_SOLICITANTE_CHEFIA", null, constraints, null);
-		log.info("==========[ ProcessamentoWorkflow createDataset datasetReturned ] ========== " + datasetReturned);	  
-			    
-		// Gravando valores de retorno
-		var retorno = datasetReturned.values;
-		log.info("==========[ ProcessamentoWorkflow createDataset dataset ]========== " + retorno);
-			
-		// Retirando o campo do resultado
-		var chefe = datasetReturned.getValue(0, "CHEFIA");
-		log.info("==========[ ProcessamentoWorkflow createDataset chefe ]========== " + chefe);
-			
-		// Gravando retorno		
-		hAPI.setCardValue("chefia", chefe);
-		
 
 		// TRATANDO RESPONSÁVEL PELO CENTRO DE CUSTO - INICIO //
-	    
+		
 		// Coleta do centro de custo seleciondo no formulário
         var ccustoTotal = hAPI.getCardValue("ccusto");
         var ccusto = ccustoTotal.substring(0,18);
@@ -77,39 +57,7 @@ function ProcessamentoWorkflow(){
         
         // Gravando retorno no formulário		
 		hAPI.setCardValue("gestorcc", chefe);
-		
-		
-		// TRATANDO GESTORES/AUTORIZADORES DA CNC - INICIO //
-		
-		// Atribuido valor na variável autorizador, para preenchimento do formulário
-		
-        // Executando chamada de dataset
-        var datasetReturn = DatasetFactory.getDataset("_RM_CCUSTO_AUTORIZADOR", null, constraints, null);
-		
-		// Retirando o campo do resultado
-        var autorizador = datasetReturn.getValue(0, "");
-		log.info("==========[ ProcessamentoWorkflow createDataset autorizador ]========== " + autorizador); 
-    	
-    	// Gravando retorno no formulário		
-		hAPI.setCardValue("autorizador", autorizador);
-		
-		
-		/////////////////////////////////////////////////////////
-	  	//		ATRIBUINDO GRUPO AUTORIZADOR FINANCEIRO 	   //
-		/////////////////////////////////////////////////////////
-		
-		var codfilial = (hAPI.getCardValue("filial")).substring(0,1);
-		
-        if (codfilial == "1") {
-        	var financAprov = "Pool:Group:w_AnaFinanceiras_BSB";
-        }
-        else {
-        	var financAprov = "Pool:Group:w_AnaFinanceiras_RIO";
-        }
-        
-        log.info("==========[ seleciona grupo analise financeiro -  financAprov ]========== " + financAprov);	
-        
-        hAPI.setCardValue("financAprov", financAprov);
+
 		
 		}
 	
@@ -117,7 +65,7 @@ function ProcessamentoWorkflow(){
 	{
 		log.error(e);
 		throw e;
-	}
+		}
 	}	
 	
 
@@ -181,36 +129,10 @@ function ProcessamentoWorkflow(){
 		var IDFLUIG = getValue('WKNumProces');
 		var SOLICITANTE = hAPI.getCardValue("solicitante");
 		var CODFILIAL = (hAPI.getCardValue("filial")).substring(0,1);
-        var CODCFO = (hAPI.getCardValue("favorecido")).substring(0,5);
         var CODCCUSTO = (hAPI.getCardValue("ccusto")).substring(0,17);
         var HOJE = new Date().toISOString().slice(0,19); // Formato ""+DTDESPESAFORMAT+"T22:34:02"
         var HISTORICO = "SOLICITAÇÃO FLUIG : "+IDFLUIG+" - "+"SOLICITANTE : "+SOLICITANTE.toUpperCase()+" - "+ (hAPI.getCardValue("observacaoMov")).toUpperCase();
         //var HISTORICO = "Solicitação Fluig : "+IDFLUIG+" - "+(hAPI.getCardValue("observacaoMov"));
-        
-        
-        // VERIFICANDO E AJUSTANDO DATA INFORMADA - INICIO
-        var DTDESPESA = hAPI.getCardValue("dataDespesa"); // Formato DD/MM/AAAA
-        tesetData = DTDESPESA.lastIndexOf("/");
-        if (tesetData < 0) { 
-        	var DTDESPESAFORMAT = DTDESPESA; 
-        }
-        else {
-        	var DTDESPESAFORMAT = DTDESPESA.substring(6,10)+"-"+DTDESPESA.substring(3,5)+"-"+DTDESPESA.substring(0,2); // Formato AAAA-MM-DD
-        }
-        // VERIFICANDO E AJUSTANDO DATA INFORMADA - FIM
-        
-        
-        // Os valores declarados, serão coletados e gravados exatamente no mesmo formato de entrada
-        var VLTRANSP = hAPI.getCardValue("valorTransporte");
-        var VLALIMENT = hAPI.getCardValue("valorAlimentacao");
-        
-        // Para calcular o valor bruto os formatos de entrada foram alterados.
-        var VLTRANSP_temp = parseFloat((VLTRANSP).replace(',','.'));
-        var VLALIMENT_temp = parseFloat((VLALIMENT).replace(',','.'));
-        var VALORBRUTO_temp = ((VLTRANSP_temp)+(VLALIMENT_temp));
-        
-        // Para gravação o valorbruto retorna ao formato com ","
-        var VALORBRUTO = (VALORBRUTO_temp.toString()).replace('.',',');
         
         
         
@@ -222,22 +144,20 @@ function ProcessamentoWorkflow(){
 		" <CODFILIAL>"+CODFILIAL+"</CODFILIAL>	"  + 
 		" <CODLOC>0"+CODFILIAL+"</CODLOC>	"  + 
 		" <CODLOCDESTINO>0"+CODFILIAL+"</CODLOCDESTINO>	"  + 
-		" <CODCFO>"+CODCFO+"</CODCFO>	"  + 
 		" <NUMEROMOV>0</NUMEROMOV>	"  + 
-		" <SERIE>OE</SERIE>	"  + 
-		" <CODTMV>1.2.35</CODTMV>	"  + 
-		" <TIPO>A</TIPO>	"  + 
+		" <SERIE>PRDM</SERIE>	"  + 
+		" <CODTMV>1.1.16</CODTMV>	"  + 
+		" <TIPO>P</TIPO>	"  + 
 		" <STATUS>A</STATUS>	"  + 
 		" <MOVIMPRESSO>0</MOVIMPRESSO>	"  + 
 		" <DOCIMPRESSO>0</DOCIMPRESSO>	"  + 
 		" <FATIMPRESSA>0</FATIMPRESSA>	"  + 
-		" <DATAEMISSAO>"+DTDESPESAFORMAT+"T00:00:00</DATAEMISSAO>	"  + 
+		" <DATAEMISSAO>"+HOJE+"</DATAEMISSAO>	"  + 
 		" <DATASAIDA>"+HOJE+"</DATASAIDA>	"  + 
 		" <COMISSAOREPRES>0.0000</COMISSAOREPRES>	"  + 
-		" <CODCPG>29</CODCPG>	"  + 
-		" <VALORBRUTO>"+VALORBRUTO+"</VALORBRUTO>	"  + 
-		" <VALORLIQUIDO>"+VALORBRUTO+"</VALORLIQUIDO>	"  + 
-		" <VALOROUTROS>"+VALORBRUTO+"</VALOROUTROS>	"  + 
+		" <VALORBRUTO>0.0000</VALORBRUTO>	"  + 
+		" <VALORLIQUIDO>0.0000</VALORLIQUIDO>	"  + 
+		" <VALOROUTROS>0.0000</VALOROUTROS>	"  + 
 		" <PERCENTUALFRETE>0.0000</PERCENTUALFRETE>	"  + 
 		" <VALORFRETE>0.0000</VALORFRETE>	"  + 
 		" <PERCENTUALSEGURO>0.0000</PERCENTUALSEGURO>	"  + 
@@ -249,29 +169,20 @@ function ProcessamentoWorkflow(){
 		" <PERCCOMISSAO>0.0000</PERCCOMISSAO>	"  + 
 		" <PESOLIQUIDO>0.0000</PESOLIQUIDO>	"  + 
 		" <PESOBRUTO>0.0000</PESOBRUTO>	"  + 
-		" <CODTB1FLX>01.015</CODTB1FLX>	"  + 
-		" <CODTB2FLX>PCR</CODTB2FLX>	"  + 
-		" <IDMOVLCTFLUXUS>-1</IDMOVLCTFLUXUS>	"  + 
+		" <CODTB3FAT>211</CODTB3FAT>	"  + 
 		" <CODMOEVALORLIQUIDO>R$</CODMOEVALORLIQUIDO>	"  + 
-		" <DATAMOVIMENTO>"+DTDESPESAFORMAT+"T00:00:00</DATAMOVIMENTO>	"  + 
-		" <NUMEROLCTGERADO>1</NUMEROLCTGERADO>	"  + 
+		" <DATAMOVIMENTO>"+CODFILIAL+"</DATAMOVIMENTO>	"  + 
 		" <GEROUFATURA>0</GEROUFATURA>	"  + 
-		" <NUMEROLCTABERTO>1</NUMEROLCTABERTO>	"  + 
-		" <CODCFOAUX>"+CODCFO+"</CODCFOAUX>	"  + 
 		" <CODCCUSTO>"+CODCCUSTO+"</CODCCUSTO>	"  + 
 		" <PERCCOMISSAOVEN2>0.0000</PERCCOMISSAOVEN2>	"  + 
-		" <CODCOLCFO>1</CODCOLCFO>	"  + 
 		" <CODUSUARIO>"+SOLICITANTE+"</CODUSUARIO>	"  + 
 		" <CODFILIALDESTINO>"+CODFILIAL+"</CODFILIALDESTINO>	"  + 
 		" <GERADOPORLOTE>0</GERADOPORLOTE>	"  + 
-		" <CODEVENTO>39</CODEVENTO>	"  + 
-		" <STATUSEXPORTCONT>1</STATUSEXPORTCONT>	"  + 
-		" <CODLOTE>1235</CODLOTE>	"  + 
+		" <STATUSEXPORTCONT>0</STATUSEXPORTCONT>	"  + 
 		" <GEROUCONTATRABALHO>0</GEROUCONTATRABALHO>	"  + 
 		" <GERADOPORCONTATRABALHO>0</GERADOPORCONTATRABALHO>	"  + 
 		" <HORULTIMAALTERACAO>"+HOJE+"</HORULTIMAALTERACAO>	"  + 
 		" <INDUSOOBJ>0.00</INDUSOOBJ>	"  + 
-		" <CONTABILIZADOPORTOTAL>0</CONTABILIZADOPORTOTAL>	"  + 
 		" <INTEGRADOBONUM>0</INTEGRADOBONUM>	"  + 
 		" <FLAGPROCESSADO>0</FLAGPROCESSADO>	"  + 
 		" <ABATIMENTOICMS>0.0000</ABATIMENTOICMS>	"  + 
@@ -279,29 +190,29 @@ function ProcessamentoWorkflow(){
 		" <USUARIOCRIACAO>"+SOLICITANTE+"</USUARIOCRIACAO>	"  + 
 		" <DATACRIACAO>"+HOJE+"</DATACRIACAO>	"  + 
 		" <STSEMAIL>0</STSEMAIL>	"  + 
-		" <VALORBRUTOINTERNO>"+VALORBRUTO+"</VALORBRUTOINTERNO>	"  + 
+		" <VALORBRUTOINTERNO>0.0000</VALORBRUTOINTERNO>	"  + 
 		" <VINCULADOESTOQUEFL>0</VINCULADOESTOQUEFL>	"  + 
 		" <VRBASEINSSOUTRAEMPRESA>0.0000</VRBASEINSSOUTRAEMPRESA>	"  + 
 		" <VALORDESCCONDICIONAL>0.0000</VALORDESCCONDICIONAL>	"  + 
 		" <VALORDESPCONDICIONAL>0.0000</VALORDESPCONDICIONAL>	"  + 
 		" <CONTORCAMENTOANTIGO>0</CONTORCAMENTOANTIGO>	"  + 
-		" <DATACONTABILIZACAO>"+DTDESPESAFORMAT+"T00:00:00</DATACONTABILIZACAO>	"  + 
+		" <DATACONTABILIZACAO>"+CODFILIAL+"</DATACONTABILIZACAO>	"  + 
 		" <INTEGRADOAUTOMACAO>0</INTEGRADOAUTOMACAO>	"  + 
 		" <INTEGRAAPLICACAO>T</INTEGRAAPLICACAO>	"  + 
 		" <DATALANCAMENTO>"+HOJE+"</DATALANCAMENTO>	"  + 
 		" <EXTENPORANEO>0</EXTENPORANEO>	"  + 
 		" <RECIBONFESTATUS>0</RECIBONFESTATUS>	"  + 
-		" <IDMOVCFO>9843</IDMOVCFO>	"  + 
 		" <VALORMERCADORIAS>0.0000</VALORMERCADORIAS>	"  + 
 		" <USARATEIOVALORFIN>0</USARATEIOVALORFIN>	"  + 
-		" <CODCOLCFOAUX>1</CODCOLCFOAUX>	"  + 
-		" <VALORRATEIOLAN>"+VALORBRUTO+"</VALORRATEIOLAN>	"  + 
-		" <HISTORICOLONGO>"+HISTORICO+"</HISTORICOLONGO>	"  + 
-		" <RATEIOCCUSTODEPTO>"+VALORBRUTO+"</RATEIOCCUSTODEPTO>	"  + 
-		" <VALORBRUTOORIG>"+VALORBRUTO+"</VALORBRUTOORIG>	"  + 
-		" <VALORLIQUIDOORIG>"+VALORBRUTO+"</VALORLIQUIDOORIG>	"  + 
-		" <VALOROUTROSORIG>"+VALORBRUTO+"</VALOROUTROSORIG>	"  + 
-		" <VALORRATEIOLANORIG>"+VALORBRUTO+"</VALORRATEIOLANORIG>	"  + 
+		" <CODCOLCFOAUX>0</CODCOLCFOAUX>	"  + 
+		" <VALORRATEIOLAN>0.0000</VALORRATEIOLAN>	"  + 
+		" <HISTORICOLONGO>"+HISTORICO+"</HISTORICOLONGO>	"  +
+		" <HISTORICOCURTO>"+HISTORICO+"</HISTORICOCURTO>	"  + 
+		" <RATEIOCCUSTODEPTO>0.0000</RATEIOCCUSTODEPTO>	"  + 
+		" <VALORBRUTOORIG>0.0000</VALORBRUTOORIG>	"  + 
+		" <VALORLIQUIDOORIG>0.0000</VALORLIQUIDOORIG>	"  + 
+		" <VALOROUTROSORIG>0.0000</VALOROUTROSORIG>	"  + 
+		" <VALORRATEIOLANORIG>0.0000</VALORRATEIOLANORIG>	"  + 
 		" <FLAGCONCLUSAO>0</FLAGCONCLUSAO>	"  + 
 		" <STATUSPARADIGMA>N</STATUSPARADIGMA>	"  + 
 		" <STATUSINTEGRACAO>N</STATUSINTEGRACAO>	"  + 
@@ -312,74 +223,55 @@ function ProcessamentoWorkflow(){
 		" <STATUSMOVINCLUSAOCOLAB>0</STATUSMOVINCLUSAOCOLAB>	"  + 
 		" <CODCOLIGADA1>1</CODCOLIGADA1>	"  + 
 		" <IDMOVHST>-1</IDMOVHST>	"  + 
-		"	  </TMOV>	"  + 
-		"	  <TNFE>	"  + 
-		" <CODCOLIGADA>1</CODCOLIGADA>	"  + 
-		" <IDMOV>-1</IDMOV>	"  + 
-		" <VALORSERVICO>0.0000</VALORSERVICO>	"  + 
-		" <DEDUCAOSERVICO>0.0000</DEDUCAOSERVICO>	"  + 
-		" <ALIQUOTAISS>0.0000</ALIQUOTAISS>	"  + 
-		" <ISSRETIDO>0</ISSRETIDO>	"  + 
-		" <VALORISS>0.0000</VALORISS>	"  + 
-		" <VALORCREDITOIPTU>0.0000</VALORCREDITOIPTU>	"  + 
-		" <BASEDECALCULO>0.0000</BASEDECALCULO>	"  + 
-		" <EDITADO>0</EDITADO>	"  + 
-		" <RECCREATEDBY>"+SOLICITANTE+"</RECCREATEDBY>	"  + 
-		" <RECCREATEDON>"+HOJE+"</RECCREATEDON>	"  + 
-		" <RECMODIFIEDBY>"+SOLICITANTE+"</RECMODIFIEDBY>	"  + 
-		" <RECMODIFIEDON>"+HOJE+"</RECMODIFIEDON>	"  + 
-		"	  </TNFE>	"  + 
-		"	  <TMOVFISCAL>	"  + 
-		" <CODCOLIGADA>1</CODCOLIGADA>	"  + 
-		" <IDMOV>-1</IDMOV>	"  + 
-		" <CONTRIBUINTECREDENCIADO>0</CONTRIBUINTECREDENCIADO>	"  + 
-		" <OPERACAOCONSUMIDORFINAL>0</OPERACAOCONSUMIDORFINAL>	"  + 
-		" <OPERACAOPRESENCIAL>0</OPERACAOPRESENCIAL>	"  + 
-		" <RECCREATEDBY>"+SOLICITANTE+"</RECCREATEDBY>	"  + 
-		" <RECCREATEDON>"+HOJE+"</RECCREATEDON>	"  + 
-		" <RECMODIFIEDBY>"+SOLICITANTE+"</RECMODIFIEDBY>	"  + 
-		" <RECMODIFIEDON>"+HOJE+"</RECMODIFIEDON>	"  + 
-		"	  </TMOVFISCAL>	"  + 
-		"	  <TMOVRATCCU>	"  + 
-		" <CODCOLIGADA>1</CODCOLIGADA>	"  + 
-		" <IDMOV>-1</IDMOV>	"  + 
-		" <CODCCUSTO>"+CODCCUSTO+"</CODCCUSTO>	"  + 
-		" <VALOR>"+VALORBRUTO+"</VALOR>	"  + 
-		" <IDMOVRATCCU>-1</IDMOVRATCCU>	"  + 
-		"	  </TMOVRATCCU>	"; 
+		"	  </TMOV>	"  
+
 		
-		
-		
-		if ( VLTRANSP_temp > 0 ){
+
+		// COLETA DE INFORMAÇÕES DO ZOOM nomeItem //
+		var indexes = hAPI.getChildrenIndexes("tbProdutos");
+		for (var i = 0; i < indexes.length; i++) {
+			var NSEQITMMOV = i+1;
+			var item = (hAPI.getCardValue("nomeItem___" + indexes[i]));
+			var codigoprd = item.substring(0,10);
+			log.info("==========[ getChildrenIndexes codigoprd ]========== " + codigoprd);
+			// Rodando dataset para coletar detalhes dos produtos
+	        var T1 = DatasetFactory.createConstraint("CODIGOPRD", codigoprd, codigoprd, ConstraintType.MUST);
+	        var constraints = new Array(T1);
+	        var datasetReturned = DatasetFactory.getDataset("_RM_TPRODUTO", null, constraints, null);
+			// Retirando o campo do resultado
+			var IDPRD = datasetReturned.getValue(0, "IDPRD");
+			log.info("==========[ getChildrenIndexes IDPRD ]========== " + IDPRD); 	        
+			var NOMEFANTASIA = datasetReturned.getValue(0, "NOMEFANTASIA");
+			log.info("==========[ getChildrenIndexes NOMEFANTASIA ]========== " + NOMEFANTASIA);
+			
+			var qtd = (hAPI.getCardValue("quantidade___" + indexes[i]));
+			log.info("==========[ getChildrenIndexes quantidade ]========== " + qtd);
+		 			
 			XML = XML + 
 			"	  <TITMMOV>	"  + 
 			" <CODCOLIGADA>1</CODCOLIGADA>	"  + 
 			" <IDMOV>-1</IDMOV>	"  + 
-			" <NSEQITMMOV>1</NSEQITMMOV>	"  + 
+			" <NSEQITMMOV>"+NSEQITMMOV+"</NSEQITMMOV>	"  + 
 			" <CODFILIAL>"+CODFILIAL+"</CODFILIAL>	"  + 
-			" <NUMEROSEQUENCIAL>1</NUMEROSEQUENCIAL>	"  + 
-			" <IDPRD>15236</IDPRD>	"  + 
-			" <CODIGOPRD>09.30.0128</CODIGOPRD>	"  + 
-			" <NOMEFANTASIA>REEMBOLSO DE DESPESA C/ TRANSPORTE(TAXI/ONIBUS/ETC)</NOMEFANTASIA>	"  + 
-			" <CODIGOREDUZIDO>15236</CODIGOREDUZIDO>	"  + 
-			" <NUMNOFABRIC>09.30.0127</NUMNOFABRIC>	"  + 
-			" <QUANTIDADE>1</QUANTIDADE>	"  + 
-			" <PRECOUNITARIO>"+VLTRANSP+"</PRECOUNITARIO>	"  + 
+			" <NUMEROSEQUENCIAL>"+NSEQITMMOV+"</NUMEROSEQUENCIAL>	"  + 
+			" <IDPRD>"+IDPRD+"</IDPRD>	"  + 
+			" <CODIGOPRD>"+codigoprd+"</CODIGOPRD>	"  + 
+			" <NOMEFANTASIA>"+NOMEFANTASIA+"</NOMEFANTASIA>	"  + 
+			" <QUANTIDADE>"+qtd+"</QUANTIDADE>	"  + 
+			" <PRECOUNITARIO>0.0000</PRECOUNITARIO>	"  + 
 			" <PRECOTABELA>0.0000</PRECOTABELA>	"  + 
-			" <DATAEMISSAO>"+DTDESPESAFORMAT+"T00:00:00</DATAEMISSAO>	"  + 
-			" <CODTB1FLX>01.015</CODTB1FLX>	"  + 
-			" <CODUND>SERV</CODUND>	"  + 
-			" <QUANTIDADEARECEBER>1</QUANTIDADEARECEBER>	"  + 
+			" <DATAEMISSAO>"+CODFILIAL+"</DATAEMISSAO>	"  + 
+			" <QUANTIDADEARECEBER>"+qtd+"</QUANTIDADEARECEBER>	"  + 
 			" <VALORUNITARIO>0.0000</VALORUNITARIO>	"  + 
 			" <VALORFINANCEIRO>0.0000</VALORFINANCEIRO>	"  + 
 			" <CODCCUSTO>"+CODCCUSTO+"</CODCCUSTO>	"  + 
 			" <ALIQORDENACAO>0.0000</ALIQORDENACAO>	"  + 
-			" <QUANTIDADEORIGINAL>1</QUANTIDADEORIGINAL>	"  + 
+			" <QUANTIDADEORIGINAL>"+qtd+"</QUANTIDADEORIGINAL>	"  + 
 			" <FLAG>0</FLAG>	"  + 
 			" <BLOCK>0</BLOCK>	"  + 
 			" <FATORCONVUND>0.0000</FATORCONVUND>	"  + 
-			" <VLTRANSPITEM>"+VLTRANSP+"</VLTRANSPITEM>	"  + 
-			" <VALORTOTALITEM>"+VLTRANSP+"</VALORTOTALITEM>	"  + 
+			" <VLTRANSPITEM>0.0000</VLTRANSPITEM>	"  + 
+			" <VALORTOTALITEM>0.0000</VALORTOTALITEM>	"  + 
 			" <QUANTIDADESEPARADA>0.0000</QUANTIDADESEPARADA>	"  + 
 			" <PERCENTCOMISSAO>0.0000</PERCENTCOMISSAO>	"  + 
 			" <COMISSAOREPRES>0.0000</COMISSAOREPRES>	"  + 
@@ -387,22 +279,18 @@ function ProcessamentoWorkflow(){
 			" <VALORFINPEDIDO>0.0000</VALORFINPEDIDO>	"  + 
 			" <VALOROPFRM1>0.0000</VALOROPFRM1>	"  + 
 			" <VALOROPFRM2>0.0000</VALOROPFRM2>	"  + 
-			" <PRECOEDITADO>1</PRECOEDITADO>	"  + 
-			" <QTDEVOLUMEUNITARIO>1</QTDEVOLUMEUNITARIO>	"  + 
+			" <PRECOEDITADO>0</PRECOEDITADO>	"  + 
 			" <PRECOTOTALEDITADO>0</PRECOTOTALEDITADO>	"  + 
 			" <VALORDESCCONDICONALITM>0.0000</VALORDESCCONDICONALITM>	"  + 
 			" <VALORDESPCONDICIONALITM>0.0000</VALORDESPCONDICIONALITM>	"  + 
-			" <DATAORCAMENTO>"+DTDESPESAFORMAT+"T00:00:00</DATAORCAMENTO>	"  + 
-			" <CODTBORCAMENTO>3.2.02.01.005</CODTBORCAMENTO>	"  + 
-			" <CODCOLTBORCAMENTO>1</CODCOLTBORCAMENTO>	"  + 
-			" <VALORUNTORCAMENTO>"+VLTRANSP+"</VALORUNTORCAMENTO>	"  + 
+			" <VALORUNTORCAMENTO>0.0000</VALORUNTORCAMENTO>	"  + 
 			" <VALSERVICONFE>0.0000</VALSERVICONFE>	"  + 
 			" <CODLOC>0"+CODFILIAL+"</CODLOC>	"  + 
 			" <VALORBEM>0.0000</VALORBEM>	"  + 
-			" <VALORLIQUIDO>"+VLTRANSP+"</VALORLIQUIDO>	"  + 
-			" <RATEIOCCUSTODEPTO>"+VLTRANSP+"</RATEIOCCUSTODEPTO>	"  + 
-			" <VLTRANSPITEMORIG>"+VLTRANSP+"</VLTRANSPITEMORIG>	"  + 
-			" <QUANTIDADETOTAL>1</QUANTIDADETOTAL>	"  + 
+			" <VALORLIQUIDO>0.0000</VALORLIQUIDO>	"  + 
+			" <RATEIOCCUSTODEPTO>0.0000</RATEIOCCUSTODEPTO>	"  + 
+			" <VLTRANSPITEMORIG>0.0000</VLTRANSPITEMORIG>	"  + 
+			" <QUANTIDADETOTAL>"+qtd+"</QUANTIDADETOTAL>	"  + 
 			" <PRODUTOSUBSTITUTO>0</PRODUTOSUBSTITUTO>	"  + 
 			" <PRECOUNITARIOSELEC>0</PRECOUNITARIOSELEC>	"  + 
 			" <INTEGRAAPLICACAO>T</INTEGRAAPLICACAO>	"  + 
@@ -414,206 +302,23 @@ function ProcessamentoWorkflow(){
 			" <IDMOVHST>-1</IDMOVHST>	"  + 
 			" <NSEQITMMOV1>1</NSEQITMMOV1>	"  + 
 			"	  </TITMMOV>	"; 
-		}
 		
-		if ( VLALIMENT_temp > 0) {
-			XML = XML + 
-			"	  <TITMMOV>	"  + 
-			" <CODCOLIGADA>1</CODCOLIGADA>	"  + 
-			" <IDMOV>-1</IDMOV>	"  + 
-			" <NSEQITMMOV>2</NSEQITMMOV>	"  + 
-			" <CODFILIAL>"+CODFILIAL+"</CODFILIAL>	"  + 
-			" <NUMEROSEQUENCIAL>1</NUMEROSEQUENCIAL>	"  + 
-			" <IDPRD>15237</IDPRD>	"  + 
-			" <CODIGOPRD>09.30.0128</CODIGOPRD>	"  + 
-			" <NOMEFANTASIA>REEMBOLSO DE DESPESA C/ ALIMENTAÇÃO</NOMEFANTASIA>	"  + 
-			" <CODIGOREDUZIDO>15237</CODIGOREDUZIDO>	"  + 
-			" <NUMNOFABRIC>09.30.0128</NUMNOFABRIC>	"  + 
-			" <QUANTIDADE>1</QUANTIDADE>	"  + 
-			" <PRECOUNITARIO>"+VLALIMENT+"</PRECOUNITARIO>	"  + 
-			" <PRECOTABELA>0.0000</PRECOTABELA>	"  + 
-			" <DATAEMISSAO>"+DTDESPESAFORMAT+"T00:00:00</DATAEMISSAO>	"  + 
-			" <CODTB1FLX>01.015</CODTB1FLX>	"  + 
-			" <CODUND>SERV</CODUND>	"  + 
-			" <QUANTIDADEARECEBER>1</QUANTIDADEARECEBER>	"  + 
-			" <VALORUNITARIO>0.0000</VALORUNITARIO>	"  + 
-			" <VALORFINANCEIRO>0.0000</VALORFINANCEIRO>	"  + 
-			" <CODCCUSTO>"+CODCCUSTO+"</CODCCUSTO>	"  + 
-			" <ALIQORDENACAO>0.0000</ALIQORDENACAO>	"  + 
-			" <QUANTIDADEORIGINAL>1</QUANTIDADEORIGINAL>	"  + 
-			" <FLAG>0</FLAG>	"  + 
-			" <BLOCK>0</BLOCK>	"  + 
-			" <FATORCONVUND>0.0000</FATORCONVUND>	"  + 
-			" <VLTRANSPITEM>"+VLALIMENT+"</VLTRANSPITEM>	"  + 
-			" <VALORTOTALITEM>"+VLALIMENT+"</VALORTOTALITEM>	"  + 
-			" <QUANTIDADESEPARADA>0.0000</QUANTIDADESEPARADA>	"  + 
-			" <PERCENTCOMISSAO>0.0000</PERCENTCOMISSAO>	"  + 
-			" <COMISSAOREPRES>0.0000</COMISSAOREPRES>	"  + 
-			" <VALORESCRITURACAO>0.0000</VALORESCRITURACAO>	"  + 
-			" <VALORFINPEDIDO>0.0000</VALORFINPEDIDO>	"  + 
-			" <VALOROPFRM1>0.0000</VALOROPFRM1>	"  + 
-			" <VALOROPFRM2>0.0000</VALOROPFRM2>	"  + 
-			" <PRECOEDITADO>1</PRECOEDITADO>	"  + 
-			" <QTDEVOLUMEUNITARIO>1</QTDEVOLUMEUNITARIO>	"  + 
-			" <PRECOTOTALEDITADO>0</PRECOTOTALEDITADO>	"  + 
-			" <VALORDESCCONDICONALITM>0.0000</VALORDESCCONDICONALITM>	"  + 
-			" <VALORDESPCONDICIONALITM>0.0000</VALORDESPCONDICIONALITM>	"  + 
-			" <DATAORCAMENTO>"+DTDESPESAFORMAT+"T00:00:00</DATAORCAMENTO>	"  + 
-			" <CODTBORCAMENTO>3.2.02.02.009</CODTBORCAMENTO>	"  + 
-			" <CODCOLTBORCAMENTO>1</CODCOLTBORCAMENTO>	"  + 
-			" <VALORUNTORCAMENTO>"+VLALIMENT+"</VALORUNTORCAMENTO>	"  + 
-			" <VALSERVICONFE>0.0000</VALSERVICONFE>	"  + 
-			" <CODLOC>0"+CODFILIAL+"</CODLOC>	"  + 
-			" <VALORBEM>0.0000</VALORBEM>	"  + 
-			" <VALORLIQUIDO>"+VLALIMENT+"</VALORLIQUIDO>	"  + 
-			" <RATEIOCCUSTODEPTO>"+VLALIMENT+"</RATEIOCCUSTODEPTO>	"  + 
-			" <VLTRANSPITEMORIG>"+VLALIMENT+"</VLTRANSPITEMORIG>	"  + 
-			" <QUANTIDADETOTAL>1</QUANTIDADETOTAL>	"  + 
-			" <PRODUTOSUBSTITUTO>0</PRODUTOSUBSTITUTO>	"  + 
-			" <PRECOUNITARIOSELEC>0</PRECOUNITARIOSELEC>	"  + 
-			" <INTEGRAAPLICACAO>T</INTEGRAAPLICACAO>	"  + 
-			" <RECCREATEDBY>"+SOLICITANTE+"</RECCREATEDBY>	"  + 
-			" <RECCREATEDON>"+HOJE+"</RECCREATEDON>	"  + 
-			" <RECMODIFIEDBY>"+SOLICITANTE+"</RECMODIFIEDBY>	"  + 
-			" <RECMODIFIEDON>"+HOJE+"</RECMODIFIEDON>	"  + 
-			" <CODCOLIGADA1>1</CODCOLIGADA1>	"  + 
-			" <IDMOVHST>-1</IDMOVHST>	"  + 
-			" <NSEQITMMOV1>2</NSEQITMMOV1>	"  + 
-			"	  </TITMMOV>	";
-		}
-		
-		if ( VLTRANSP_temp > 0) {
-			XML = XML + 
-			"	  <TITMMOVRATCCU>	"  + 
-			" <CODCOLIGADA>1</CODCOLIGADA>	"  + 
-			" <IDMOV>-1</IDMOV>	"  + 
-			" <NSEQITMMOV>1</NSEQITMMOV>	"  + 
-			" <CODCCUSTO>"+CODCCUSTO+"</CODCCUSTO>	"  + 
-			" <VALOR>"+VLTRANSP+"</VALOR>	"  + 
-			" <IDMOVRATCCU>-1</IDMOVRATCCU>	"  + 
-			"	  </TITMMOVRATCCU>	";
-		}
-				
-		if ( VLALIMENT_temp > 0) {
-			XML = XML + 
-			"	  <TITMMOVRATCCU>	"  + 
-			" <CODCOLIGADA>1</CODCOLIGADA>	"  + 
-			" <IDMOV>-1</IDMOV>	"  + 
-			" <NSEQITMMOV>2</NSEQITMMOV>	"  + 
-			" <CODCCUSTO>"+CODCCUSTO+"</CODCCUSTO>	"  + 
-			" <VALOR>"+VLALIMENT+"</VALOR>	"  + 
-			" <IDMOVRATCCU>-1</IDMOVRATCCU>	"  + 
-			"	  </TITMMOVRATCCU>	";
-		}
-		
-		XML = XML +
-		"	  <TMOVCOMPL>	"  + 
-		" <CODCOLIGADA>1</CODCOLIGADA>	"  + 
-		" <IDMOV>-1</IDMOV>	"  + 
-		" <RECCREATEDBY>"+SOLICITANTE+"</RECCREATEDBY>	"  + 
-		" <RECCREATEDON>"+HOJE+"</RECCREATEDON>	"  + 
-		" <RECMODIFIEDBY>"+SOLICITANTE+"</RECMODIFIEDBY>	"  + 
-		" <RECMODIFIEDON>"+HOJE+"</RECMODIFIEDON>	"  + 
-		" <CNCAUTORIZ>00</CNCAUTORIZ>	"  + 
-		" <COMPROVANT>F</COMPROVANT>	"  + 
-		" <COMPROVANTE>NAO</COMPROVANTE>	"  + 
-		" <IDFLUIG>"+IDFLUIG+"</IDFLUIG>	"  + 
-		" <BCISS>0.0000</BCISS>	"  + 
-		" <VREMP>0.0000</VREMP>	"  + 
-		" <MULTAREC>0.0000</MULTAREC>	"  + 
-		"	  </TMOVCOMPL>	";
-		
-		if ( VLTRANSP_temp > 0) {
 			XML = XML +
 			"	  <TITMMOVCOMPL>	"  + 
 			" <CODCOLIGADA>1</CODCOLIGADA>	"  + 
 			" <IDMOV>-1</IDMOV>	"  + 
-			" <NSEQITMMOV>1</NSEQITMMOV>	"  + 
+			" <NSEQITMMOV>"+NSEQITMMOV+"</NSEQITMMOV>	"  + 
 			" <RECCREATEDBY>"+SOLICITANTE+"</RECCREATEDBY>	"  + 
 			" <RECCREATEDON>"+HOJE+"</RECCREATEDON>	"  + 
 			" <RECMODIFIEDBY>"+SOLICITANTE+"</RECMODIFIEDBY>	"  + 
 			" <RECMODIFIEDON>"+HOJE+"</RECMODIFIEDON>	"  + 
 			" <SERVICO>0.0000</SERVICO>	"  + 
 			"	  </TITMMOVCOMPL>	";
-		}
-		
-		if ( VLALIMENT_temp > 0) {
-			XML = XML +
-			"	  <TITMMOVCOMPL>	"  + 
-			" <CODCOLIGADA>1</CODCOLIGADA>	"  + 
-			" <IDMOV>-1</IDMOV>	"  + 
-			" <NSEQITMMOV>2</NSEQITMMOV>	"  + 
-			" <RECCREATEDBY>"+SOLICITANTE+"</RECCREATEDBY>	"  + 
-			" <RECCREATEDON>"+HOJE+"</RECCREATEDON>	"  + 
-			" <RECMODIFIEDBY>"+SOLICITANTE+"</RECMODIFIEDBY>	"  + 
-			" <RECMODIFIEDON>"+HOJE+"</RECMODIFIEDON>	"  + 
-			" <SERVICO>0.0000</SERVICO>	"  + 
-			"	  </TITMMOVCOMPL>	";
-		}
 			
-		
-		XML = XML +
-		"	  <TMOVTRANSP>	"  + 
-		" <CODCOLIGADA>1</CODCOLIGADA>	"  + 
-		" <IDMOV>-1</IDMOV>	"  + 
-		" <RETIRAMERCADORIA>0</RETIRAMERCADORIA>	"  + 
-		" <TIPOCTE>0</TIPOCTE>	"  + 
-		" <TOMADORTIPO>0</TOMADORTIPO>	"  + 
-		" <TIPOEMITENTEMDFE>0</TIPOEMITENTEMDFE>	"  + 
-		" <LOTACAO>1</LOTACAO>	"  + 
-		" <TIPOTRANSPORTADORMDFE>0</TIPOTRANSPORTADORMDFE>	"  + 
-		" <TIPOBPE>0</TIPOBPE>	"  + 
-		" <RECCREATEDBY>"+SOLICITANTE+"</RECCREATEDBY>	"  + 
-		" <RECCREATEDON>"+HOJE+"</RECCREATEDON>	"  + 
-		" <RECMODIFIEDBY>"+SOLICITANTE+"</RECMODIFIEDBY>	"  + 
-		" <RECMODIFIEDON>"+HOJE+"</RECMODIFIEDON>	"  + 
-		"	  </TMOVTRANSP>	"  + 
-		"	  <TCTRCMOV>	"  + 
-		" <CODCOLIGADA>1</CODCOLIGADA>	"  + 
-		" <IDMOV>-1</IDMOV>	"  + 
-		" <VALORNOTAS>0.0000</VALORNOTAS>	"  + 
-		" <VALORRATEADO>0.0000</VALORRATEADO>	"  + 
-		" <QUANTIDADENOTAS>0</QUANTIDADENOTAS>	"  + 
-		" <QUANTIDADERATEADAS>0</QUANTIDADERATEADAS>	"  + 
-		" <RECCREATEDBY>"+SOLICITANTE+"</RECCREATEDBY>	"  + 
-		" <RECCREATEDON>"+HOJE+"</RECCREATEDON>	"  + 
-		" <RECMODIFIEDBY>"+SOLICITANTE+"</RECMODIFIEDBY>	"  + 
-		" <RECMODIFIEDON>"+HOJE+"</RECMODIFIEDON>	"  + 
-		"	  </TCTRCMOV>	"; 
+			}
 		
 		
-		if ( VLTRANSP_temp > 0) {
-			XML = XML +
-			"	  <TITMMOVFISCAL>	"  + 
-			" <CODCOLIGADA>1</CODCOLIGADA>	"  + 
-			" <IDMOV>-1</IDMOV>	"  + 
-			" <NSEQITMMOV>1</NSEQITMMOV>	"  + 
-			" <QTDECONTRATADA>0.0000</QTDECONTRATADA>	"  + 
-			" <VLRTOTTRIB>0.0000</VLRTOTTRIB>	"  + 
-			" <AQUISICAOPAA>0</AQUISICAOPAA>	"  + 
-			" <RECCREATEDBY>"+SOLICITANTE+"</RECCREATEDBY>	"  + 
-			" <RECCREATEDON>"+HOJE+"</RECCREATEDON>	"  + 
-			" <RECMODIFIEDBY>"+SOLICITANTE+"</RECMODIFIEDBY>	"  + 
-			" <RECMODIFIEDON>"+HOJE+"</RECMODIFIEDON>	"  + 
-			"	  </TITMMOVFISCAL>	";
-		}
-			
 		
-		if ( VLALIMENT_temp > 0) {
-			XML = XML +
-			"	  <TITMMOVFISCAL>	"  + 
-			" <CODCOLIGADA>1</CODCOLIGADA>	"  + 
-			" <IDMOV>-1</IDMOV>	"  + 
-			" <NSEQITMMOV>2</NSEQITMMOV>	"  + 
-			" <QTDECONTRATADA>0.0000</QTDECONTRATADA>	"  + 
-			" <VLRTOTTRIB>0.0000</VLRTOTTRIB>	"  + 
-			" <AQUISICAOPAA>0</AQUISICAOPAA>	"  + 
-			" <RECCREATEDBY>"+SOLICITANTE+"</RECCREATEDBY>	"  + 
-			" <RECCREATEDON>"+HOJE+"</RECCREATEDON>	"  + 
-			" <RECMODIFIEDBY>"+SOLICITANTE+"</RECMODIFIEDBY>	"  + 
-			" <RECMODIFIEDON>"+HOJE+"</RECMODIFIEDON>	"  + 
-			"	  </TITMMOVFISCAL>	";
-		}
 		
 		XML = XML + "</MovMovimento>";
 		 

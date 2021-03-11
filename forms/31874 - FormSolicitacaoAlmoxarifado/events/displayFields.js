@@ -14,7 +14,11 @@ function displayFields(form,customHTML){
 	    mapaForm = form.getCardData();
 	    var it = mapaForm.keySet().iterator();
 
-	    while (it.hasNext()) { // Laço de repetição para habilitar/desabilitar os campos
+	    // Desabilitando o botão
+	    
+	    
+	    // Laço de repetição para habilitar/desabilitar os campos
+	    while (it.hasNext()) { 
 	        var key = it.next();
 	        form.setEnabled(key, habilitar);
 	    }
