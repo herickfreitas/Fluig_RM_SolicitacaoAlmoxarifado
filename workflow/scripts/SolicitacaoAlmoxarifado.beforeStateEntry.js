@@ -130,6 +130,7 @@ function ProcessamentoWorkflow(){
 		var SOLICITANTE = hAPI.getCardValue("solicitante");
 		var CODFILIAL = (hAPI.getCardValue("filial")).substring(0,1);
         var CODCCUSTO = (hAPI.getCardValue("ccusto")).substring(0,17);
+        var TRANSACAO = (hAPI.getCardValue("transacao")).substring(0,3);
         var HOJE = new Date().toISOString().slice(0,19); // Formato ""+DTDESPESAFORMAT+"T22:34:02"
         var HISTORICO = "SOLICITAÇÃO FLUIG : "+IDFLUIG+" - "+"SOLICITANTE : "+SOLICITANTE.toUpperCase()+" - "+ (hAPI.getCardValue("observacaoMov")).toUpperCase();
         //var HISTORICO = "Solicitação Fluig : "+IDFLUIG+" - "+(hAPI.getCardValue("observacaoMov"));
@@ -169,7 +170,7 @@ function ProcessamentoWorkflow(){
 		" <PERCCOMISSAO>0.0000</PERCCOMISSAO>	"  + 
 		" <PESOLIQUIDO>0.0000</PESOLIQUIDO>	"  + 
 		" <PESOBRUTO>0.0000</PESOBRUTO>	"  + 
-		" <CODTB3FAT>211</CODTB3FAT>	"  + 
+		" <CODTB3FAT>"+TRANSACAO+"</CODTB3FAT>	"  + 
 		" <CODMOEVALORLIQUIDO>R$</CODMOEVALORLIQUIDO>	"  + 
 		" <DATAMOVIMENTO>"+CODFILIAL+"</DATAMOVIMENTO>	"  + 
 		" <GEROUFATURA>0</GEROUFATURA>	"  + 

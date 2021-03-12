@@ -59,6 +59,10 @@ function displayFields(form,customHTML){
 		//Atribuindo os valores aos formulários
 		form.setValue("filial",filial);
 		form.setValue("ccusto",custo);
+		
+		//Valor inicial padrão da trasacao
+		var transacao = "211 - RDM - Normal";
+		form.setValue("transacao",transacao);
     }
 }
 
