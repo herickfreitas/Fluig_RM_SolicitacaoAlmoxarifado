@@ -13,8 +13,40 @@ function createDataset(fields, constraints, sortFields) {
             processo = constraints[i].initialValue;    
         }
     }
- 
-    var myQuery = "SELECT * FROM _Fluig_ITENS_ALMOX WHERE CODFILIAL = "+"'"+processo+"'" ;
+
+    var usuarioSolicitante = "";
+    for (var i = 0; i < constraints.length; i++) {
+        if (constraints[i].fieldName == 'CODUSUARIO') {
+        	usuarioSolicitante = constraints[i].initialValue; 
+        	log.info("_RM_ITENS_ALMOX usuarioSolicitante: " + usuarioSolicitante);
+        }
+    }
+    
+	// usuários que podem solicitar medicamentos
+	var listaSERBEM = ['flaviaalves','camilaribas']; 	// ,'herickfreitas'
+	log.info("listaSERBEM: " + listaSERBEM);
+	
+	// verificando se solicitante esta na lista
+	var idx = "";
+	for (var i = 0; i < listaSERBEM.length; i++) {
+		if (listaSERBEM[i] == usuarioSolicitante) {
+			idx = listaSERBEM[i];
+			log.info("idx: " + idx);
+		}
+	}
+	
+	
+	if (idx != "") {
+    	var myQuery = "SELECT * FROM _Fluig_ITENS_ALMOX WHERE CODFILIAL = "+"'"+processo+"'";
+    	
+    }
+    
+    else {
+    	var myQuery = "SELECT * FROM _Fluig_ITENS_ALMOX WHERE CODIGOPRD NOT LIKE '05.%' AND CODFILIAL = "+"'"+processo+"'";
+    	
+    }
+    
+    
     log.info("QUERY: " + myQuery);
     try {
         var conn = ds.getConnection();

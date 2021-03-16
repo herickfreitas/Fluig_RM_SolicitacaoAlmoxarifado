@@ -132,7 +132,7 @@ function ProcessamentoWorkflow(){
         var CODCCUSTO = (hAPI.getCardValue("ccusto")).substring(0,17);
         var TRANSACAO = (hAPI.getCardValue("transacao")).substring(0,3);
         var HOJE = new Date().toISOString().slice(0,19); // Formato ""+DTDESPESAFORMAT+"T22:34:02"
-        var HISTORICO = "SOLICITAÇÃO FLUIG : "+IDFLUIG+" - "+"SOLICITANTE : "+SOLICITANTE.toUpperCase()+" - "+ (hAPI.getCardValue("observacaoMov")).toUpperCase();
+        var HISTORICO = "SOLICITAÇÃO FLUIG : "+IDFLUIG+" - "+"SOLICITANTE : "+SOLICITANTE.toUpperCase()+" - "+"TRANSACAO : "+(hAPI.getCardValue("transacao")).toUpperCase()+" - "+ (hAPI.getCardValue("observacaoMov")).toUpperCase();
         //var HISTORICO = "Solicitação Fluig : "+IDFLUIG+" - "+(hAPI.getCardValue("observacaoMov"));
         
         

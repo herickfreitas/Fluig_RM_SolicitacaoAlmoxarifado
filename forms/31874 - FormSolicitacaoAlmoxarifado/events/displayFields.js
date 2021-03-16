@@ -29,7 +29,10 @@ function displayFields(form,customHTML){
 	
 	// Sugestão de filial e centro de custo para o solicitante
     if	(activity == inicioPadrao || activity == inicioProcesso){
+    	
+    	// capturar usuario corrente
     	var usuarioSolicitante = getDadosUsuario().getLogin();
+    	form.setValue("solicitante",usuarioSolicitante);
     	
 		// Formatando em minúsculo
 		var codusuario = usuarioSolicitante.toLowerCase();
