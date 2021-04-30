@@ -11,7 +11,7 @@ GO
 
 
 
-ALTER VIEW [dbo].[_Fluig_ITENS_ALMOX]
+CREATE VIEW [dbo].[_Fluig_ITENS_ALMOX]
 
 AS
 
