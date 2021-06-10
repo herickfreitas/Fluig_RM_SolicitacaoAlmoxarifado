@@ -18,7 +18,10 @@ function validateForm(form){
 			msg += "Centro de custo tem preenchimento obrigatório. \n";
 			var hasErros = true;
 			}
-
+		if (form.getValue('transacao') == ""){
+			msg += "Transação tem preenchimento obrigatório. \n";
+			var hasErros = true;
+			}
 		
 		//Verificando se  intens foram incluídos
 		var produtos = form.getChildrenIndexes("tbProdutos");

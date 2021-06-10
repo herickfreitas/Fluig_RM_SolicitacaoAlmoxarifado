@@ -29,7 +29,7 @@
     <processDefinitionVersionPK>
       <companyId>1</companyId>
       <processId>PMS - Solicitação de Almoxarifado</processId>
-      <version>1</version>
+      <version>3</version>
     </processDefinitionVersionPK>
     <versionDescription></versionDescription>
     <formId>0</formId>
@@ -939,7 +939,7 @@ function ProcessamentoWorkflow(){&#xd;
         <companyId>1</companyId>
         <processId>SolicitacaoAlmoxarifado</processId>
         <propertyId>AutomaticTasks</propertyId>
-        <version>1</version>
+        <version>3</version>
       </advancedProcessPropertiesPK>
       <propertieValue></propertieValue>
     </AdvancedProcessProperties>
@@ -1017,7 +1017,7 @@ function ProcessamentoWorkflow(){&#xd;
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>SolicitacaoAlmoxarifado</processId>
-        <version>1</version>
+        <version>3</version>
         <linkSequence>192</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -1028,7 +1028,7 @@ function ProcessamentoWorkflow(){&#xd;
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>SolicitacaoAlmoxarifado</processId>
-        <version>1</version>
+        <version>3</version>
         <linkSequence>194</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -1039,7 +1039,7 @@ function ProcessamentoWorkflow(){&#xd;
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>SolicitacaoAlmoxarifado</processId>
-        <version>1</version>
+        <version>3</version>
         <linkSequence>194</linkSequence>
         <bendSequence>2</bendSequence>
       </processLinkBendPK>
@@ -1050,7 +1050,7 @@ function ProcessamentoWorkflow(){&#xd;
       <processLinkBendPK>
         <companyId>1</companyId>
         <processId>SolicitacaoAlmoxarifado</processId>
-        <version>1</version>
+        <version>3</version>
         <linkSequence>195</linkSequence>
         <bendSequence>1</bendSequence>
       </processLinkBendPK>
@@ -1064,7 +1064,7 @@ function ProcessamentoWorkflow(){&#xd;
       <extendedPropertyFieldPK>
         <companyId>1</companyId>
         <processId>SolicitacaoAlmoxarifado</processId>
-        <version>1</version>
+        <version>3</version>
         <stateSequence>0</stateSequence>
         <propertyName>AutomaticTasks</propertyName>
       </extendedPropertyFieldPK>
@@ -1082,17 +1082,17 @@ function ProcessamentoWorkflow(){&#xd;
       <id>0</id>
       <tenantId>0</tenantId>
       <processId>SolicitacaoAlmoxarifado</processId>
-      <processVersion>1</processVersion>
+      <processVersion>3</processVersion>
       <stateSequence>145</stateSequence>
       <appKey>approval</appKey>
       <appField>title</appField>
-      <description>Solicitação de Reembolso</description>
+      <description>PMS - Solicitação de Almoxarifado</description>
     </ProcessAppConfiguration>
     <ProcessAppConfiguration>
       <id>0</id>
       <tenantId>0</tenantId>
       <processId>SolicitacaoAlmoxarifado</processId>
-      <processVersion>1</processVersion>
+      <processVersion>3</processVersion>
       <stateSequence>145</stateSequence>
       <appKey>approval</appKey>
       <appField>description</appField>
@@ -1103,7 +1103,7 @@ function ProcessamentoWorkflow(){&#xd;
       <id>0</id>
       <tenantId>0</tenantId>
       <processId>SolicitacaoAlmoxarifado</processId>
-      <processVersion>1</processVersion>
+      <processVersion>3</processVersion>
       <stateSequence>145</stateSequence>
       <appKey>approval</appKey>
       <appField>highlight</appField>
@@ -1113,17 +1113,17 @@ function ProcessamentoWorkflow(){&#xd;
       <id>0</id>
       <tenantId>0</tenantId>
       <processId>SolicitacaoAlmoxarifado</processId>
-      <processVersion>1</processVersion>
+      <processVersion>3</processVersion>
       <stateSequence>145</stateSequence>
       <appKey>approval</appKey>
       <appField>approve</appField>
-      <description>174</description>
+      <description>161</description>
     </ProcessAppConfiguration>
     <ProcessAppConfiguration>
       <id>0</id>
       <tenantId>0</tenantId>
       <processId>SolicitacaoAlmoxarifado</processId>
-      <processVersion>1</processVersion>
+      <processVersion>3</processVersion>
       <stateSequence>145</stateSequence>
       <appKey>approval</appKey>
       <appField>reject</appField>
@@ -1133,17 +1133,17 @@ function ProcessamentoWorkflow(){&#xd;
       <id>0</id>
       <tenantId>0</tenantId>
       <processId>SolicitacaoAlmoxarifado</processId>
-      <processVersion>1</processVersion>
+      <processVersion>3</processVersion>
       <stateSequence>161</stateSequence>
       <appKey>approval</appKey>
       <appField>title</appField>
-      <description>Solicitação de Reembolso</description>
+      <description>PMS - Solicitação de Almoxarifado</description>
     </ProcessAppConfiguration>
     <ProcessAppConfiguration>
       <id>0</id>
       <tenantId>0</tenantId>
       <processId>SolicitacaoAlmoxarifado</processId>
-      <processVersion>1</processVersion>
+      <processVersion>3</processVersion>
       <stateSequence>161</stateSequence>
       <appKey>approval</appKey>
       <appField>description</appField>
@@ -1154,7 +1154,7 @@ function ProcessamentoWorkflow(){&#xd;
       <id>0</id>
       <tenantId>0</tenantId>
       <processId>SolicitacaoAlmoxarifado</processId>
-      <processVersion>1</processVersion>
+      <processVersion>3</processVersion>
       <stateSequence>161</stateSequence>
       <appKey>approval</appKey>
       <appField>highlight</appField>
@@ -1164,7 +1164,7 @@ function ProcessamentoWorkflow(){&#xd;
       <id>0</id>
       <tenantId>0</tenantId>
       <processId>SolicitacaoAlmoxarifado</processId>
-      <processVersion>1</processVersion>
+      <processVersion>3</processVersion>
       <stateSequence>161</stateSequence>
       <appKey>approval</appKey>
       <appField>approve</appField>
@@ -1174,27 +1174,77 @@ function ProcessamentoWorkflow(){&#xd;
       <id>0</id>
       <tenantId>0</tenantId>
       <processId>SolicitacaoAlmoxarifado</processId>
-      <processVersion>1</processVersion>
+      <processVersion>3</processVersion>
       <stateSequence>161</stateSequence>
       <appKey>approval</appKey>
       <appField>reject</appField>
-      <description>180</description>
+      <description>134</description>
     </ProcessAppConfiguration>
     <ProcessAppConfiguration>
       <id>0</id>
       <tenantId>0</tenantId>
       <processId>SolicitacaoAlmoxarifado</processId>
-      <processVersion>1</processVersion>
+      <processVersion>3</processVersion>
+      <stateSequence>172</stateSequence>
+      <appKey>approval</appKey>
+      <appField>title</appField>
+      <description></description>
+    </ProcessAppConfiguration>
+    <ProcessAppConfiguration>
+      <id>0</id>
+      <tenantId>0</tenantId>
+      <processId>SolicitacaoAlmoxarifado</processId>
+      <processVersion>3</processVersion>
+      <stateSequence>172</stateSequence>
+      <appKey>approval</appKey>
+      <appField>description</appField>
+      <description></description>
+    </ProcessAppConfiguration>
+    <ProcessAppConfiguration>
+      <id>0</id>
+      <tenantId>0</tenantId>
+      <processId>SolicitacaoAlmoxarifado</processId>
+      <processVersion>3</processVersion>
+      <stateSequence>172</stateSequence>
+      <appKey>approval</appKey>
+      <appField>highlight</appField>
+      <description></description>
+    </ProcessAppConfiguration>
+    <ProcessAppConfiguration>
+      <id>0</id>
+      <tenantId>0</tenantId>
+      <processId>SolicitacaoAlmoxarifado</processId>
+      <processVersion>3</processVersion>
+      <stateSequence>172</stateSequence>
+      <appKey>approval</appKey>
+      <appField>approve</appField>
+      <description></description>
+    </ProcessAppConfiguration>
+    <ProcessAppConfiguration>
+      <id>0</id>
+      <tenantId>0</tenantId>
+      <processId>SolicitacaoAlmoxarifado</processId>
+      <processVersion>3</processVersion>
+      <stateSequence>172</stateSequence>
+      <appKey>approval</appKey>
+      <appField>reject</appField>
+      <description></description>
+    </ProcessAppConfiguration>
+    <ProcessAppConfiguration>
+      <id>0</id>
+      <tenantId>0</tenantId>
+      <processId>SolicitacaoAlmoxarifado</processId>
+      <processVersion>3</processVersion>
       <stateSequence>180</stateSequence>
       <appKey>approval</appKey>
       <appField>title</appField>
-      <description>Solicitação de Reembolso</description>
+      <description>PMS - Solicitação de Almoxarifado</description>
     </ProcessAppConfiguration>
     <ProcessAppConfiguration>
       <id>0</id>
       <tenantId>0</tenantId>
       <processId>SolicitacaoAlmoxarifado</processId>
-      <processVersion>1</processVersion>
+      <processVersion>3</processVersion>
       <stateSequence>180</stateSequence>
       <appKey>approval</appKey>
       <appField>description</appField>
@@ -1205,7 +1255,7 @@ function ProcessamentoWorkflow(){&#xd;
       <id>0</id>
       <tenantId>0</tenantId>
       <processId>SolicitacaoAlmoxarifado</processId>
-      <processVersion>1</processVersion>
+      <processVersion>3</processVersion>
       <stateSequence>180</stateSequence>
       <appKey>approval</appKey>
       <appField>highlight</appField>
@@ -1215,11 +1265,21 @@ function ProcessamentoWorkflow(){&#xd;
       <id>0</id>
       <tenantId>0</tenantId>
       <processId>SolicitacaoAlmoxarifado</processId>
-      <processVersion>1</processVersion>
+      <processVersion>3</processVersion>
       <stateSequence>180</stateSequence>
       <appKey>approval</appKey>
       <appField>approve</appField>
       <description>172</description>
+    </ProcessAppConfiguration>
+    <ProcessAppConfiguration>
+      <id>0</id>
+      <tenantId>0</tenantId>
+      <processId>SolicitacaoAlmoxarifado</processId>
+      <processVersion>3</processVersion>
+      <stateSequence>180</stateSequence>
+      <appKey>approval</appKey>
+      <appField>reject</appField>
+      <description></description>
     </ProcessAppConfiguration>
   </list>
   <list/>
